@@ -1,95 +1,23 @@
-<html>
-<html lang=""en"
-<head>
- <meta charset=""UTF-8">
-<meta name=""viewport" content="width=device-width, initial-scale=1.0>
-<title>Peculiar Media
-    <link rel="stylesheet" href="css/style.css">
-</title>
-
-</head>
-<body>
-    <div class="overlay"></head>div>
-    <nav>
-        <h2>Peculiar</h2>
-        <ul>
-             <li>Home</li>
-             <li>Shop</li>
-             <li>Lookbook</li>
-             <li>Contact</li>
-        </ul>
-    </nav>
-</nav>
-<div class="conent"
-    <h1>PECULIAR MEDIA</h1>
-    <P>Define your identity. Wear the difference.</P>
-    <button class=""btn">Explore Collection</button>
+<div id="productModal" class="modal-overlay">
+  <div class="modal-panel" id="productModalContent"></div>
 </div>
-</body>
-</html>
-<!doctype html>
-<html lang="en"
-<head>
-<meta charset="Utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shop  |  MR PECULIAR</title>
+        <h2>${product.name}</h2>
+        <p style="margin:10px 0;">Category: ${product.category}</p>
+        <p style="font-size:1.5rem; font-weight:bold;">$${product.price.toLocaleString()}</p>
 
-</head>
- <body>
-    <nav>
-        <h1>MR PECULIAR</h1>
-        <UL>
-            <li>Home</li>li>
-            <li>Shop</li>
-            <li>collections</li>
-            <li>contact</li>
-        </UL>
-    </nav>
-     
-    <SECTION CLASS="header"
-  <div class="card">
-            <div class="image"></div>
-            <h3>Louis Vuitton Loafers</h3>
-            <img src="download.jpg" alt="louis vuitton loafers">
-            <p class="price">R12 000</p>
-            <button>Add to cart</button>
-        </div>
+        <button id="addFromModal" style="margin-top:20px; padding:12px 20px;">
+            🛍️ ADD TO CART
+        </button>
 
-        <div class="card">
-             <div class="image"></div>
-             <h3>Le Fleur Shorts</h3>
-             <img src="OIP.webp" alt="le fleur short">
-             <p class="price">R1 600</p>
-             <button>Add to Cart</button>
-        </div>
-
-        <div class="card">
-            <div class="image"></div>
-            <h3>Luxury Watches</h3>
-            <img src="OIP (1).webp" alt="luxury watches"
-            <p class="price">RR8 500</p>
-            <button>Add to Cart</button>
-        </div>
-
-        <div class="card">
-            <div class="image"></div>
-            <h3>Luxury Cars</h3>
-            <img src="OIP (2).webp" alt="luxury Cars"
-            <p class="price"R900</p>
-            <button>Add to cart</button>
-        </div>
-
-    </div>
-           
-    </section>
-
- </body>
- </html>
-  <html>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale1,0">
-<title>Contact | MR PECULIAR</title>
-
-
-  </html>
-  </head>
+        <button id="closeProductModal" style="margin-top:10px;">
+            Close
+        </button>
+<div class="cart-bottom" id="cartIcon">
+    <span>🛍️</span>
+    <span class="cart-count" id="cartCounter">0</span>
+</div>
+        <h2>🎉 Order Confirmed</h2>
+        <p>Your luxury items are on the way.</p>
+        <p>Total Paid: $${totalPrice.toLocaleString()}</p>
+        <button onclick="location.reload()">Continue Shopping</button>
+        
