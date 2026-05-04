@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Treasures Emporium</title>
+    <style>
+        :root {
+            --primary-brown: #8B4513;
+            --secondary-brown: #A0522D;
+            --light-brown: #D2B48C;
+            --gold: #FFD700;
+            --dark-gold: #DAA520;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-brown);
+            color: #333;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--primary-brown), var(--secondary-brown));
+            color: var(--gold);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 2rem;
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            width: 300px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            border: 2px solid var(--gold);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--gold);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.5rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--primary-brown);
+        }
+        
+        .product-price {
+            font-size: 1.2rem;
+            color: var(--dark-gold);
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        
+        .product-description {
+            margin: 0.5rem 0 1rem 0;
+            color: #555;
+        }
+        
+        .buy-btn {
+            background: linear-gradient(to right, var(--gold), var(--dark-gold));
+            color: var(--primary-brown);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .buy-btn:hover {
+            background: linear-gradient(to right, var(--dark-gold), var(--gold));
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 2rem;
+            border: 3px solid var(--gold);
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: var(--primary-brown);
+        }
+        
+        .modal-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--light-brown);
+            padding-bottom: 1rem;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+        }
+        
+        .quantity-btn {
+            background-color: var(--gold);
+            border: none;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            margin: 0 10px;
+            height: 30px;
+            border: 1px solid var(--light-brown);
+            border-radius: 5px;
+        }
+        
+        .add-to-cart {
+            background: linear-gradient(to right, var(--primary-brown), var(--secondary-brown));
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .add-to-cart:hover {
+            background: linear-gradient(to right, var(--secondary-brown), var(--primary-brown));
+        }
+        
+        /* Cart styles */
+        .cart-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .cart-btn {
+            background: linear-gradient(to right, var(--primary-brown), var(--secondary-brown));
+            color: var(--gold);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--gold);
+            color: var(--primary-brown);
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .cart-modal {
+            display: none;
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            max-height: 500px;
+            overflow-y: auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--gold);
+            padding: 1rem;
+            z-index: 101;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--light-brown);
+        }
+        
+        .cart-item-info {
+            flex-grow: 1;
+        }
+        
+        .cart-item-name {
+            font-weight: bold;
+            color: var(--primary-brown);
+        }
+        
+        .cart-item-price {
+            color: var(--dark-gold);
+        }
+        
+        .cart-total {
+            font-weight: bold;
+            text-align: right;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            color: var(--primary-brown);
+        }
+        
+        .checkout-btn {
+            background: linear-gradient(to right, var(--gold), var(--dark-gold));
+            color: var(--primary-brown);
+            border: none;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .checkout-btn:hover {
+            background: linear-gradient(to right, var(--dark-gold), var(--gold));
+        }
+        
+        footer {
+            background: linear-gradient(to right, var(--primary-brown), var(--secondary-brown));
+            color: var(--gold);
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Golden Treasures Emporium</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Product 1 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Antique Pocket Watch" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Antique Pocket Watch</h3>
+                <p class="product-price">$249.99</p>
+                <p class="product-description">A beautifully crafted gold pocket watch from the 19th century, perfect for collectors.</p>
+                <button class="buy-btn" onclick="openModal('Antique Pocket Watch', 249.99, 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80')">View Details</button>
+            </div>
+        </div>
+        
+        <!-- Product 2 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Leather Bound Journal" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Leather Bound Journal</h3>
+                <p class="product-price">$39.99</p>
+                <p class="product-description">Handcrafted brown leather journal with gold embossing and premium paper.</p>
+                <button class="buy-btn" onclick="openModal('Leather Bound Journal', 39.99, 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80')">View Details</button>
+            </div>
+        </div>
+        
+        <!-- Product 3 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Gold Fountain Pen" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Gold Fountain Pen</h3>
+                <p class="product-price">$129.99</p>
+                <p class="product-description">Elegant 24k gold plated fountain pen with smooth writing experience.</p>
+                <button class="buy-btn" onclick="openModal('Gold Fountain Pen', 129.99, 'https://images.unsplash.com/photo-1602173574767-37ac01994b2a?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80')">View Details</button>
+            </div>
+        </div>
+        
+        <!-- Product 4 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Vintage Compass" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Vintage Compass</h3>
+                <p class="product-price">$89.99</p>
+                <p class="product-description">Brass compass with gold accents, perfect for adventurers and collectors alike.</p>
+                <button class="buy-btn" onclick="openModal('Vintage Compass', 89.99, 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80')">View Details</button>
+            </div>
+        </div>
+        
+        <!-- Product 5 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Wooden Writing Desk" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Wooden Writing Desk</h3>
+                <p class="product-price">$599.99</p>
+                <p class="product-description">Solid oak writing desk with gold hardware, a timeless addition to any study.</p>
+                <button class="buy-btn" onclick="openModal('Wooden Writing Desk', 599.99, 'https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80')">View Details</button>
+            </div>
+        </div>
+        
+        <!-- Product 6 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Decorative Globe" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Decorative Globe</h3>
+                <p class="product-price">$179.99</p>
+                <p class="product-description">Vintage-style globe with gold accents on a wooden stand, perfect for decoration.</p>
+                <button class="buy-btn" onclick="openModal('Decorative Globe', 179.99, 'https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80')">View Details</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="" alt="Product Image" class="modal-image">
+            <h2 id="modalTitle"></h2>
+            <p id="modalPrice" class="product-price"></p>
+            <p>This exquisite item will make a perfect addition to your collection. Handcrafted with attention to detail and using only the finest materials.</p>
+            
+            <div class="quantity-controls">
+                <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                <input type="number" id="quantity" class="quantity-input" value="1" min="1">
+                <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+            </div>
+            
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+    </div>
+    
+    <!-- Cart Button and Modal -->
+    <div class="cart-container">
+        <button class="cart-btn" onclick="toggleCart()">
+            🛒
+            <span id="cartCount" class="cart-count">0</span>
+        </button>
+        
+        <div id="cartModal" class="cart-modal">
+            <h3>Your Cart</h3>
+            <div id="cartItems"></div>
+            <div id="cartTotal" class="cart-total">Total: $0.00</div>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Golden Treasures Emporium. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Current product in modal
+        let currentProduct = null;
+        let cart = [];
+        
+        // Modal functions
+        function openModal(name, price, image) {
+            currentProduct = { name, price, image };
+            document.getElementById('modalTitle').textContent = name;
+            document.getElementById('modalPrice').textContent = '
+
+Features of this Website:
+
+Brown & Gold Color Theme:
+   - Rich brown backgrounds with gold accents
+   - Elegant gradient headers and buttons
+
+Product Display:
+   - Six product cards with images, titles, prices, and descriptions
+   - Hover effects on product cards
+   - Each card has a "View Details" button
+
+Product Modal:
+   - Clicking a product button opens a detailed modal
+   - Quantity selector with + and - buttons
+   - "Add to Cart" functionality
+
+Shopping Cart:
+   - Floating cart button in the bottom right
+   - Shows current item count
+   - Clicking opens a cart modal with all items
+   - Displays individual prices and quantities
+   - Calculates and shows the total
+   - Remove item functionality
+   - Checkout button
+
+Responsive Design:
+   - Works on different screen sizes
+   - Clean layout that adapts to available space
+
+Visual Appeal:
+   - High-quality product images
+   - Consistent styling throughout
+   - Smooth transitions and animations
+
+To use this website, simply copy the entire code into an HTML file and open it in a browser. All functionality is self-contained with no external dependencies. + price.toFixed(2);
+            document.getElementById('modalImage').src = image;
+            document.getElementById('quantity').value = 1;
+            document.getElementById('productModal').style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+        
+        function changeQuantity(change) {
+            const quantityInput = document.getElementById('quantity');
+            let newValue = parseInt(quantityInput.value) + change;
+            if (newValue < 1) newValue = 1;
+            quantityInput.value = newValue;
+        }
+        
+        // Cart functions
+        function addToCart() {
+            if (!currentProduct) return;
+            
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const existingItem = cart.find(item => item.name === currentProduct.name);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    name: currentProduct.name,
+                    price: currentProduct.price,
+                    quantity: quantity,
+                    image: currentProduct.image
+                });
+            }
+            
+            updateCart();
+            closeModal();
+        }
+        
+        function updateCart() {
+            const cartItemsElement = document.getElementById('cartItems');
+            const cartCountElement = document.getElementById('cartCount');
+            const cartTotalElement = document.getElementById('cartTotal');
+            
+            // Clear current items
+            cartItemsElement.innerHTML = '';
+            
+            // Add each item to cart
+            let total = 0;
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price.toFixed(2)} × ${item.quantity}</div>
+                    </div>
+                    <div>${itemTotal.toFixed(2)}</div>
+                    <button onclick="removeFromCart(${index})" style="background: none; border: none; color: red; cursor: pointer; margin-left: 10px;">✕</button>
+                `;
+                
+                cartItemsElement.appendChild(itemElement);
+            });
+            
+            // Update count and total
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountElement.textContent = itemCount;
+            cartTotalElement.textContent = `Total: ${total.toFixed(2)}`;
+        }
+        
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+        
+        function toggleCart() {
+            const cartModal = document.getElementById('cartModal');
+            cartModal.style.display = cartModal.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            alert(`Thank you for your purchase! Total: ${calculateTotal().toFixed(2)}
+Your items will be shipped soon.`);
+            cart = [];
+            updateCart();
+            toggleCart();
+        }
+        
+        function calculateTotal() {
+            return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        }
+        
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('productModal')) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Treasures Emporium</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Golden Treasures Emporium</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Product 1 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Antique Pocket Watch" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Antique Pocket Watch</h3>
+                <p class="product-price">$249.99</p>
+                <p class="product-description">A beautifully crafted gold pocket watch from the 19th century, perfect for collectors.</p>
+                <button class="buy-btn" data-name="Antique Pocket Watch" data-price="249.99" data-image="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80">View Details</button>
+            </div>
+        </div>
+        
+        <!-- Product 2 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Leather Bound Journal" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Leather Bound Journal</h3>
+                <p class="product-price">$39.99</p>
+                <p class="product-description">Handcrafted brown leather journal with gold embossing and premium paper.</p>
+                <button class="buy-btn" data-name="Leather Bound Journal" data-price="39.99" data-image="https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80">View Details</button>
+            </div>
+        </div>
+        
+        <!-- Product 3 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Gold Fountain Pen" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Gold Fountain Pen</h3>
+                <p class="product-price">$129.99</p>
+                <p class="product-description">Elegant 24k gold plated fountain pen with smooth writing experience.</p>
+                <button class="buy-btn" data-name="Gold Fountain Pen" data-price="129.99" data-image="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80">View Details</button>
+            </div>
+        </div>
+        
+        <!-- Product 4 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Vintage Compass" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Vintage Compass</h3>
+                <p class="product-price">$89.99</p>
+                <p class="product-description">Brass compass with gold accents, perfect for adventurers and collectors alike.</p>
+                <button class="buy-btn" data-name="Vintage Compass" data-price="89.99" data-image="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80">View Details</button>
+            </div>
+        </div>
+        
+        <!-- Product 5 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Wooden Writing Desk" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Wooden Writing Desk</h3>
+                <p class="product-price">$599.99</p>
+                <p class="product-description">Solid oak writing desk with gold hardware, a timeless addition to any study.</p>
+                <button class="buy-btn" data-name="Wooden Writing Desk" data-price="599.99" data-image="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80">View Details</button>
+            </div>
+        </div>
+        
+        <!-- Product 6 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Decorative Globe" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Decorative Globe</h3>
+                <p class="product-price">$179.99</p>
+                <p class="product-description">Vintage-style globe with gold accents on a wooden stand, perfect for decoration.</p>
+                <button class="buy-btn" data-name="Decorative Globe" data-price="179.99" data-image="https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80">View Details</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="modalImage" src="" alt="Product Image" class="modal-image">
+            <h2 id="modalTitle"></h2>
+            <p id="modalPrice" class="product-price"></p>
+            <p>This exquisite item will make a perfect addition to your collection. Handcrafted with attention to detail and using only the finest materials.</p>
+            
+            <div class="quantity-controls">
+                <button class="quantity-btn minus">-</button>
+                <input type="number" id="quantity" class="quantity-input" value="1" min="1">
+                <button class="quantity-btn plus">+</button>
+            </div>
+            
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+    </div>
+    
+    <!-- Cart Button and Modal -->
+    <div class="cart-container">
+        <button class="cart-btn">
+            🛒
+            <span id="cartCount" class="cart-count">0</span>
+        </button>
+        
+        <div id="cartModal" class="cart-modal">
+            <h3>Your Cart</h3>
+            <div id="cartItems"></div>
+            <div id="cartTotal" class="cart-total">Total: $0.00</div>
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Golden Treasures Emporium. All rights reserved.</p>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+
