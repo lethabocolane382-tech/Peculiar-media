@@ -1,0 +1,677 @@
+<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Peculiar Media | Luxury Golf le Fleur & Exotics</title>
+    <style>
+        {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            color: #f5efdf;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 25% 40%, rgba(45, 25, 10, 0.65) 2px, transparent 2px),
+             repeating-linear-gradient(45deg, rgba(90, 50, 25, 0.3) 0px, rgba(90, 50, 25, 0.3) 2px, transparent 2px, transparent 8px);
+            background-size: 40px 40px, 20px 20px;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(30, 15, 5, 0.4) 0%, rgba(0,0,0,0.7) 100%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .wrapper {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 32px 90px 32px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 28px 0 20px;
+            border-bottom: 2px solid rgba(210, 150, 85, 0.5);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .site-title {
+            flex: 1;
+            text-align: center;
+            font-size: 2.2rem;
+            letter-spacing: 4px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #F7D9A9, #D6A15A);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            word-break: keep-all;
+        }
+
+        .about-btn {
+            background: #2f2217;
+            border: 1.5px solid #c9974b;
+            padding: 10px 26px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #f5e2b0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            backdrop-filter: blur(2px);
+        }
+
+        .about-btn:hover {
+            background: #c9974b;
+            color: #111;
+            border-color: #fae47e;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 28px;
+            margin: 54px 0 64px;
+        }
+
+        .product-card {
+            background: rgba(20, 14, 8, 0.8);
+            backdrop-filter: blur(3px);
+            border-radius: 28px;
+            padding: 20px 16px 20px;
+            transition: all 0.25s;
+            border: 1px solid rgba(200, 140, 70, 0.4);
+            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: #e5b45c;
+            background: rgba(30, 20, 12, 0.95);
+            box-shadow: 0 20px 30px -12px black;
+        }
+
+        .product-img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 20px;
+            background: #2f241b;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: 0.2s;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 12px 0 5px;
+            color: #F7E5C2;
+        }
+
+        .product-desc {
+            font-size: 0.75rem;
+            color: #cfb784;
+            margin-bottom: 12px;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #f5bc70;
+            margin: 8px 0;
+            letter-spacing: 1px;
+        }
+
+        .buy-btn {
+            background: #4a2c1a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: #ffecb3;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
+            transition: 0.2s;
+            font-family: inherit;
+            border: 1px solid #b97f48;
+        }
+
+        .buy-btn:hover {
+            background: #b97f48;
+            color: #000;
+            transform: scale(0.98);
+        }
+
+        .cart-icon {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: #1f160f;
+            border-radius: 60px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            z-index: 1000;
+            border: 1px solid #d7a451;
+            backdrop-filter: blur(10px);
+            transition: 0.2s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+
+        .cart-icon:hover {
+            background: #d49c44;
+            border-color: #ffdd99;
+            transform: scale(1.03);
+        }
+
+        .cart-icon span:first-child {
+            font-size: 28px;
+        }
+
+        .cart-count {
+            background: #eeb76b;
+            color: #1f1a12;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-radius: 40px;
+            padding: 2px 12px;
+            min-width: 38px;
+            text-align: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .modal-content {
+            background: #1f1810;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            border-radius: 36px;
+            padding: 28px 24px;
+            border: 1px solid #dba155;
+            box-shadow: 0 25px 45px black;
+            overflow-y: auto;
+            color: #efe0c6;
+        }
+
+        .modal-content h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            border-left: 5px solid #e6b164;
+            padding-left: 18px
+        }
+
+        .cart-items-list {
+            list-style: none
+            margin: 20px 0
+        }
+        .cart-items-list li {
+            display: flex
+            justify-content: space-between
+            background: #2c2119
+            margin: 10px 0
+            padding: 12px 18px
+            border-radius: 40px
+            border-left: 6px solid #e0a457
+        }
+
+        .total-amount {
+            font-size: 1.7rem
+            font-weight: bold
+            text-align: right
+            margin-top: 20px
+            border-top: 2px dashed #ce9a51
+            padding-top: 15px
+        }
+        .close-modal {
+            background: #d6a15a
+            border: none
+            padding: 10px 20px
+            border-radius: 40px
+            font-weight: bold
+            margin-top: 20px
+            cursor: pointer
+            font-size: 1rem
+        }
+        .empty-cart-msg {
+            text-align: center
+            padding: 30px
+            font-style: italic
+        }
+
+        .social-links {
+            margin: 30px 0
+            background: #2a1f16
+            padding: 20px
+            border-radius: 32px
+        }
+        .social-links a {
+            display: inline-block
+            margin: 12px 20px 12px 0
+            font-size: 1.4rem
+            font-weight: bold
+            color: #f7cf94
+            text-decoration: none
+            transition: 0.2s
+        }
+        .social-links a:hover 
+            {color: white
+            text-decoration: underline}
+        .instagram-wallpaper {
+            margin-top: 20px
+            border-radius: 28px
+            overflow: hidden
+            border: 2px solid #bb8b54
+        }
+        .ig-wall-img {
+            width: 100%
+            aspect-ratio: 16 / 9
+            object-fit: cover
+            display: block
+        }
+        .insta-handle {
+            font-size: 0.8rem
+            text-align: center
+            margin-top: 8px
+            color: #e6bc82
+        }
+
+        @media (max-width: 1100px) {
+            .products-grid {
+                gap: 16px
+            }
+            .product-title {
+                font-size: 1rem
+            }
+        }
+        @media (max-width: 880px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(170px, 1fr))
+                gap: 20px
+            }
+            .wrapper {
+                padding: 0 20px 90px 20px
+            }
+            .site-title {
+                font-size: 1.5rem
+            }
+        }
+        button {
+            cursor: pointer
+        }
+        footer {
+            text-align: center
+            margin-top: 30px
+            opacity: 0.7
+            font-size: 0.7rem
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="top-bar">
+        <div style="width: 100px;"></div>
+        <div class="site-title">⚡ PECULIAR MEDIA ⚡</div>
+        <button class="about-btn" id="aboutUsBtn">📿 ABOUT US</button>
+    </div>
+
+    <div class="products-grid" id="productsContainer">
+
+        <div class="product-card" data-product='{"id":1, "name":"Golf le Fleur Cardigan", "price":349, "category":"Cardigan"}'>
+            <img class="product-img" src="https://placehold.co/400x400/4a2c1a/f5d6a8?text=🌼+Cardigan" alt="Golf le Fleur cardigan">
+            <div class="product-title">Golf le Fleur Cardigan</div>
+            <div class="product-desc">Soft wool · pastel floral</div>
+            <div class="price">$349</div>
+            <button class="buy-btn">ADD TO CART</button>
+        </div>
+
+        <div class="product-card" data-product='{"id":2, "name":"Golf le Fleur Loafers", "price":225, "category":"Loafers"}'>
+            <img class="product-img" src="https://placehold.co/400x400/5a3d27/e9c687?text=👞+Loafers" alt="Golf le Fleur Loafers">
+            <div class="product-title">Golf le Fleur Loafers</div>
+            <div class="product-desc">Leather · Daisy buckle</div>
+            <div class="price">$225</div>
+            <button class="buy-btn">ADD TO CART</button>
+        </div>
+
+        <div class="product-card" data-product='{"id":3, "name":"Ferrari SF90 Stradale", "price":489000, "category":"Sports Car"}'>
+            <img class="product-img" src="https://placehold.co/400x400/1a1a1a/dba953?text=🏎️+SF90" alt="Luxury sports car">
+            <div class="product-title">Ferrari SF90 Stradale</div>
+            <div class="product-desc">986 HP · Hybrid V8</div>
+            <div class="price">$489,000</div>
+            <button class="buy-btn">ADD TO CART</button>
+        </div>
+
+        <div class="product-card" data-product='{"id":4, "name":"Golf le Fleur Shorts", "price":135, "category":"Shorts"}'>
+            <img class="product-img" src="https://placehold.co/400x400/3b2c1d/f0cd96?text=🌿+Shorts" alt="Golf le Fleur shorts">
+            <div class="product-title">Golf le Fleur Shorts</div>
+            <div class="product-desc">Terry fleece · embroidered</div>
+            <div class="price">$135</div>
+            <button class="buy-btn">ADD TO CART</button>
+        </div>
+
+        <div class="product-card" data-product='{"id":5, "name":"Patek Philippe Nautilus", "price":118500, "category":"Watch"}'>
+            <img class="product-img" src="https://placehold.co/400x400/2c241d/dbb46b?text=⌚+Luxury+Watch" alt="Luxury watch">
+            <div class="product-title">Patek Philippe Nautilus</div>
+            <div class="product-desc">18k玫瑰金 · 自动机械</div>
+            <div class="price">$118,500</div>
+            <button class="buy-btn">ADD TO CART</button>
+        </div>
+    </div>
+    <footer>✦ peculiar lifestyle | exclusive golf le fleur + exotic cars ✦</footer>
+</div>
+
+<div class="cart-icon" id="cartIcon">
+    <span>🛒</span>
+    <span class="cart-count" id="cartCount">0</span>
+</div>
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+        <h2>🛍️ YOUR SHOPPING CART</h2>
+        <div id="cartDetailsList" class="cart-items-list">
+            <div class="empty-cart-msg">Your cart is empty — add some peculiar goods.</div>
+        </div>
+        <div id="cartTotalDisplay" class="total-amount"></div>
+        <button class="close-modal" id="closeCartModal">Continue Shopping</button>
+        <button id="checkoutPurchaseBtn" style="background:#e6b164; margin-left:12px;" class="close-modal">✨ Complete Purchase ✨</button>
+    </div>
+</div>
+
+
+<div id="aboutModal" class="modal">
+    <div class="modal-content">
+        <h2>📸 ABOUT PECULIAR MEDIA</h2>
+        <div class="social-links">
+            <p style="margin-bottom:12px;">Follow our journey & exclusive drops:</p>
+            <a href="https://instagram.com/Mr.peculiar0" target="_blank">📷 Instagram: @Mr.peculiar0</a><br/>
+            <a href="https://tiktok.com/@Mr.peculiar6" target="_blank">🎵 TikTok: @Mr.peculiar6</a>
+        </div>
+        <div class="instagram-wallpaper">
+    
+            <img class="ig-wall-img" src="https://placehold.co/1280x720/392e22/d9bc7a?text=📸+MR.PECULIAR+INSTAGRAM+WALLPAPER+16:9" alt="Mr.peculiar Instagram aesthetic grid wallpaper">
+            <div class="insta-handle">🔹 from @Mr.peculiar0 archives | luxury moments 🔹</div>
+        </div>
+        <button class="close-modal" id="closeAboutModal">Close</button>
+    </div>
+</div>
+
+<script>
+    let cart = []
+
+    function updateCartUI() {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity,0)
+        document.getElementById('cartCount').innerText = totalItems
+        localStorage.setItem('peculiar_cart', JSON.stringify(cart))
+    }
+
+    function renderCartModal() {
+        const container = document.getElementById('cartDetailsList')
+        const totalContainer = document.getElementById('cartTotalDisplay')
+        if (!container) return
+
+        if (cart.length === 0) {
+            container.innerHTML = '<div class="empty-cart-msg">🛒 Cart is empty — explore our cardigans, loafers, supercars, shorts & watches!</div>';
+            totalContainer.innerHTML = ''
+            return
+        }
+
+        let itemsHtml = '<ul style="list-style:none; padding:0;">'
+        let totalPrice = 0
+        cart.forEach(item => {
+            const itemTotal = item.price * item.quantity
+            totalPrice += itemTotal
+            itemsHtml += `
+                <li style="display:flex; justify-content:space-between; background:#37291e; margin:10px 0; padding:10px 16px; border-radius:40px;">
+                    <strong>${item.name}</strong> 
+                    <span>$${item.price.toLocaleString()} x ${item.quantity} = <strong>$${itemTotal.toLocaleString()}</strong></span>
+                    <button class="remove-one-item" data-id="${item.id}" style="background:#aa6f3c; border:none; border-radius:30px; padding:4px 12px; color:white;">Remove</button>
+                </li>
+            `
+        })
+        itemsHtml += '</ul>'
+        container.innerHTML = itemsHtml
+        totalContainer.innerHTML = `<span style="font-weight:bold;">💰 TOTAL: $${totalPrice.toLocaleString()} USD</span>`;
+
+        document.querySelectorAll('.remove-one-item').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(btn.getAttribute('data-id'))
+                const itemIndex = cart.findIndex(i => i.id === id)
+                if (itemIndex !== -1) {
+                    if (cart[itemIndex].quantity > 1) {
+                        cart[itemIndex].quantity -= 1
+                    } else {
+                        cart.splice(itemIndex, 1)
+                    }
+                    updateCartUI()
+                    renderCartModal()
+                }
+                e.stopPropagation()
+            })
+        })
+    }
+    function addToCart(product) {
+        const existing = cart.find(item => item.id === product.id)
+        if (existing) {
+            existing.quantity += 1
+        } else {
+            cart.push({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                category: product.category,
+                quantity: 1
+            });
+        }
+        updateCartUI()
+
+        const cartIconDiv = document.getElementById('cartIcon')
+        cartIconDiv.style.transform = 'scale(1.1)'
+        setTimeout(() => { cartIconDiv.style.transform = ''; }, 200)
+    }
+
+
+    function completePurchase() {
+        if (cart.length === 0) {
+            alert("🛑 Your cart is empty. Add some stylish Golf le Fleur or exotic cars first!")
+            return
+        }
+
+        const orderData = {
+            items: cart,
+            total: cart.reduce((sum, i) => sum + (i.price * i.quantity), 0),
+            timestamp: new Date().toISOString()
+        }
+        sessionStorage.setItem('pendingPurchase', JSON.stringify(orderData))
+        const purchaseHtml = `
+            <div style="text-align:center;">
+                <h2>✨ PURCHASE COMPLETION ✨</h2>
+                <p>Thank you for shopping at Peculiar Media.</p>
+                <p>Your order total: <strong>$${orderData.total.toLocaleString()}</strong></p>
+                <p>Items: ${orderData.items.map(i => `${i.name} (x${i.quantity})`).join(', ')}</p>
+                <p>💳 Payment simulation: order confirmed.</p>
+                <button id="finalizeCloseBtn" style="background:#cf9f5a; margin-top:20px; padding:12px 28px; border-radius:40px;">Close & Continue</button>
+            </div>
+        `
+        const modalCart = document.getElementById('cartModal')
+        const modalContentDiv = document.querySelector('#cartModal .modal-content')
+        const originalContent = modalContentDiv.innerHTML
+        modalContentDiv.innerHTML = purchaseHtml
+        const finalBtn = modalContentDiv.querySelector('#finalizeCloseBtn')
+        finalBtn.addEventListener('click', () => {
+
+            cart = []
+            updateCartUI()
+            modalContentDiv.innerHTML = originalContent
+
+            attachModalEvents()
+            renderCartModal()
+            modalCart.style.display = 'none'
+            alert('Purchase completed! Cart cleared. Thank you. 🎉')
+        })
+
+        const closePurchase = () => {
+            modalContentDiv.innerHTML = originalContent
+            attachModalEvents()
+            renderCartModal()
+            modalCart.style.display = 'none'
+        }
+
+        if (!modalContentDiv.querySelector('#finalizeCloseBtn')) return
+    
+    }
+
+    function attachModalEvents() {
+        const closeCart = document.getElementById('closeCartModal')
+        const checkoutBtn = document.getElementById('checkoutPurchaseBtn')
+        if (closeCart) {
+            const newClose = closeCart.cloneNode(true)
+            closeCart.parentNode.replaceChild(newClose, closeCart)
+            newClose.addEventListener('click', () => {
+                document.getElementById('cartModal').style.display = 'none'
+            })
+        }
+        if (checkoutBtn) {
+            const newCheckout = checkoutBtn.cloneNode(true)
+            checkoutBtn.parentNode.replaceChild(newCheckout, checkoutBtn)
+            newCheckout.addEventListener('click', () => {
+                completePurchase()
+            })
+        }
+    }
+
+    function loadCartFromStorage() {
+        const saved = localStorage.getItem('peculiar_cart')
+        if (saved) {
+            try {
+                cart = JSON.parse(saved)
+            } catch(e) { cart = [] }
+        } else {
+            cart = []
+        }
+        updateCartUI()
+    }
+    function initAddToCartButtons() {
+        const btns = document.querySelectorAll('.buy-btn')
+        btns.forEach((btn, idx) => {
+            const card = btn.closest('.product-card')
+            if (card && card.dataset.product) {
+                const productData = JSON.parse(card.dataset.product)
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault()
+                    addToCart(productData)
+                });
+            } else {
+
+                const parentCard = btn.closest('.product-card')
+                if (parentCard) {
+                    const titleElem = parentCard.querySelector('.product-title')
+                    const priceElem = parentCard.querySelector('.price')
+                    if (titleElem && priceElem) {
+                        let rawPrice = priceElem.innerText.replace('$', '').replace(',', '')
+                        let priceNum = parseFloat(rawPrice)
+                        let productName = titleElem.innerText
+                        let id = productName.length + idx
+                        addToCart({ id: id, name: productName, price: priceNum, category: 'general' })
+                    }
+                }
+            }
+        })
+    }
+
+
+    const cartIconDiv = document.getElementById('cartIcon')
+    const cartModal = document.getElementById('cartModal')
+    const aboutModalDiv = document.getElementById('aboutModal')
+    const aboutBtn = document.getElementById('aboutUsBtn')
+
+    cartIconDiv.addEventListener('click', () => {
+        renderCartModal()
+        cartModal.style.display = 'flex'
+    })
+
+    aboutBtn.addEventListener('click', () => {
+        aboutModalDiv.style.display = 'flex'
+    })
+
+    window.addEventListener('click', (e) => {
+        if (e.target === cartModal) cartModal.style.display = 'none'
+        if (e.target === aboutModalDiv) aboutModalDiv.style.display = 'none'
+    })
+
+    document.getElementById('closeAboutModal')?.addEventListener('click', () => {
+        aboutModalDiv.style.display = 'none'
+    });
+
+    loadCartFromStorage()
+    initAddToCartButtons()
+    attachModalEvents()
+
+    document.querySelectorAll('.product-card').forEach(card => {
+        if (!card.dataset.product) {
+            const title = card.querySelector('.product-title')?.innerText
+            const priceSpan = card.querySelector('.price')?.innerText
+            let price = 0
+            if (priceSpan) price = parseFloat(priceSpan.replace('$', '').replace(',', ''))
+            let id = title ? title.length : Math.random()
+            const obj = { id: id, name: title || 'item', price: isNaN(price) ? 0 : price, category: 'style' };
+            card.dataset.product = JSON.stringify(obj)
+        }
+    });
+    initAddToCartButtons()
+</script>
+</body>
+</html>
